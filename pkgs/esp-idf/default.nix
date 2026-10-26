@@ -1,8 +1,11 @@
 {
   owner ? "espressif",
   repo ? "esp-idf",
-  rev ? "v5.5.2",
-  sha256 ? "sha256-xYlj8uG/nxeMMNdAY8AbBiA7RYuEOOxoDyb+wVK8QWc=",
+  # Tip of release/v6.1 on 2026-09-22. The v6.1 tag has an ESP32-C3 Wi-Fi init
+  # regression (https://github.com/78/xiaozhi-esp32/issues/2344), so track the
+  # release branch until v6.1.1 is tagged.
+  rev ? "9a97f6c54ec638111ce55cd36581b3c192f15207",
+  sha256 ? "sha256-JVzyfwXFpZ4GeVKc1wf12cHv1IPPGxRDd2hKcgjbi3w=",
   toolsToInclude ? [
     "xtensa-esp-elf-gdb"
     "riscv32-esp-elf-gdb"
@@ -69,7 +72,9 @@ let
         # This list is from `tools/requirements/requirements.core.txt` in the
         # ESP-IDF checkout.
         setuptools
+        packaging
         click
+        rich-click
         pyserial
         cryptography
         pyparsing
@@ -77,20 +82,26 @@ let
         idf-component-manager
         esp-coredump
         esptool
-        esp-idf-diag
         esp-idf-kconfig
         esp-idf-monitor
         esp-idf-nvs-partition-gen
-        esp-idf-panic-decoder
         esp-idf-size
+        esp-idf-diag
+        esp-idf-panic-decoder
+        esp-idf-sbom
+        pyclang
+        construct
+        rich
+        psutil
+
         tree-sitter
         tree-sitter-grammars.tree-sitter-c
-        pyclang
-        psutil
-        rich
-        argcomplete
 
         freertos_gdb
+        idf-drivers-gdb
+
+        # Not in requirements.core.txt, but idf.py uses it for shell completion.
+        argcomplete
 
         # The esp idf vscode extension seems to want pip, too
         pip
